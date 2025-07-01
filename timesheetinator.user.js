@@ -74,7 +74,6 @@ function analyzeTableRows() {
 
 function resetTableInputs() {
   const inputs = document.querySelectorAll('input[data-projectid][data-wpid][data-day]');
-  alert(JSON.stringify(inputs));
   inputs.forEach(input => {
     input.value = '0';
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -130,8 +129,6 @@ function autoFill(){
             requiredHours: numbers.secondNum
         };
   });
-
-    alert(JSON.stringify(combined));
     resetTableInputs();
     fillInputs(combined);
 
