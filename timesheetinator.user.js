@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Timesheetinator
-// @version      2025-07-01
+// @version      2025-07-03
 // @description  Lets you autofill most of the boring timesheets for your projects.
-// @author       valentin-seitz
+// @author       someone
 // @include      https://opstrs03.bsc.es/Time*/*
 // @grant        none
 // ==/UserScript==
@@ -129,6 +129,7 @@ function autoFill(){
             requiredHours: numbers.secondNum
         };
   });
+
     resetTableInputs();
     fillInputs(combined);
 
@@ -155,6 +156,40 @@ function addEraseButton(){
 }).insertAfter('#saveAllButton');
 }
 
+function addOnSelectFunctionality(){
+    $('#monthSelect').on('change', function () {
+    var selectedMonth = $(this).val();
+
+    // Parse current query parameters
+    var params = new URLSearchParams(window.location.search);
+
+    // Update the month parameter
+    params.set('month', selectedMonth);
+
+    // Build the new URL
+    var baseUrl = window.location.origin + window.location.pathname;
+    var newUrl = baseUrl + '?' + params.toString();
+
+    // Redirect to the updated URL
+    window.location.href = newUrl;
+  });
+    $('#yearSelect').on('change', function () {
+    var selectedYear = $(this).val();
+
+    // Parse current query parameters
+    var params = new URLSearchParams(window.location.search);
+
+    // Update the month parameter
+    params.set('year', selectedYear);
+
+    // Build the new URL
+    var baseUrl = window.location.origin + window.location.pathname;
+    var newUrl = baseUrl + '?' + params.toString();
+
+    // Redirect to the updated URL
+    window.location.href = newUrl;
+  });
+}
 
 // Here we check if we have the year and stuff in the header
 let locationParams = new URLSearchParams(window.location.search);
@@ -173,7 +208,10 @@ if(!locationParams.has('personId')){
 // first lets fix some ugly UI bugs:
 
 fixMyUIBugs();
+addOnSelectFunctionality();
 addAutoFillButton();
 addEraseButton();
+
+
 
 })();
